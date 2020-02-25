@@ -1,0 +1,29 @@
+Si jamais la fonction de profilage d'Eclipse ne marche pas, il y a toujours une alternative en utilisant la ligne de commande.
+
+Tout d'abord, il faut programmer la carte (avec Quartus II) et créer les projets (BSP et application) pour Eclipse.
+
+Sous Eclipse, rapellez-vous de configurer les bons paramètres pour le profilage (bsp gprof, exit(0), etc).
+Une fois le projet créé sur eclipse (fichier *.elf) vous pouvez utiliser le command shell:
+
+Pour lancer le profilage:
+
+1: Depuis Eclipse: -> click droit sur le projet
+				   -> Nios II -> NiosII command shell (vous serai déjà dans le répertoire de travail)
+
+2: Dans le command shell:	
+
+    a. Créez l'application (*.elf) avec: "./create-this-app" (optionnel -- peut être fait depuis Eclipse)
+
+	b. Téléchargez l'application avec: "nios2-download -g --write-gmon gmon.out *.elf --cable 1"
+	
+	Assurez-vous d'avoir restreint la quantité d'itérations sur votre main() (La boucle for). Parfois, il est nécessaire de relancer l'application.
+	Il faut voir "Uploaded GMON data: - in - s" ou un message similaire. 
+	
+	c. Il faut convertir le fichier gmon.out à un format .txt pour pouvoir le consulter. Pour ce faire, tapez:
+		"nios2-elf-gprof <nom_du fichier>.elf gmon.out > report.txt"
+	Maintenant vous pouvez utiliser n'importe quel éditeur de texte pour consulter les données du profilage.
+  
+
+Si l'éxecution ne se fait pas à 100%, le rapport n'est pas généré. Il faut relancer l'application/reset plusieurs fois au besoin. 
+
+

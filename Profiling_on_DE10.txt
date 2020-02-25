@@ -6,6 +6,9 @@ Instructions pour le profilage sur la DE-10:
 
 3 - Dans le deuxième shell, utilisez la commande: "nios2-download -g --write-gmon gmon.out *.elf"
 
+4 - Il faut convertir le fichier gmon.out à un format .txt pour pouvoir le consulter. Pour ce faire, tapez:
+		"nios2-elf-gprof <nom_du fichier>.elf gmon.out > report.txt"
+
 Le premier shell sera votre "Nios Console" et le deuxième lance le projet. Il ne faut pas oublier d'activer gprof
 dans les configurations du BSP.
 

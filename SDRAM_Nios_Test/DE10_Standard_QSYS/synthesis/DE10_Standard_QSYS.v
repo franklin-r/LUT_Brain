@@ -28,7 +28,7 @@ module DE10_Standard_QSYS (
 		output wire        vga_output_VS                   //                        .VS
 	);
 
-	wire          pll_outclk0_clk;                                            // pll:outclk_0 -> [ELE8307_VGA_0:av_clk, irq_mapper:clk, jtag_uart:clk, key:clk, mm_interconnect_0:pll_outclk0_clk, nios2_gen2_0:clk, onchip_memory2:clk, pll_0:refclk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys:clock, timer:clk]
+	wire          pll_outclk0_clk;                                            // pll:outclk_0 -> [ELE8307_VGA_0:av_clk, irq_mapper:clk, jtag_uart:clk, key:clk, mm_interconnect_0:pll_outclk0_clk, nios2_gen2_0:clk, onchip_memory2:clk, pll_0:refclk, rst_controller:clk, rst_controller_001:clk, sdram:clk, sysid_qsys:clock, timer:clk, timsestamp_timer:clk]
 	wire          pll_0_outclk0_clk;                                          // pll_0:outclk_0 -> ELE8307_VGA_0:CLOCK_25
 	wire  [127:0] ele8307_vga_0_avalon_master_readdata;                       // mm_interconnect_0:ELE8307_VGA_0_avalon_master_readdata -> ELE8307_VGA_0:av_readdata
 	wire          ele8307_vga_0_avalon_master_waitrequest;                    // mm_interconnect_0:ELE8307_VGA_0_avalon_master_waitrequest -> ELE8307_VGA_0:av_waitrequest
@@ -96,11 +96,17 @@ module DE10_Standard_QSYS (
 	wire    [1:0] mm_interconnect_0_key_s1_address;                           // mm_interconnect_0:key_s1_address -> key:address
 	wire          mm_interconnect_0_key_s1_write;                             // mm_interconnect_0:key_s1_write -> key:write_n
 	wire   [31:0] mm_interconnect_0_key_s1_writedata;                         // mm_interconnect_0:key_s1_writedata -> key:writedata
+	wire          mm_interconnect_0_timsestamp_timer_s1_chipselect;           // mm_interconnect_0:timsestamp_timer_s1_chipselect -> timsestamp_timer:chipselect
+	wire   [15:0] mm_interconnect_0_timsestamp_timer_s1_readdata;             // timsestamp_timer:readdata -> mm_interconnect_0:timsestamp_timer_s1_readdata
+	wire    [2:0] mm_interconnect_0_timsestamp_timer_s1_address;              // mm_interconnect_0:timsestamp_timer_s1_address -> timsestamp_timer:address
+	wire          mm_interconnect_0_timsestamp_timer_s1_write;                // mm_interconnect_0:timsestamp_timer_s1_write -> timsestamp_timer:write_n
+	wire   [15:0] mm_interconnect_0_timsestamp_timer_s1_writedata;            // mm_interconnect_0:timsestamp_timer_s1_writedata -> timsestamp_timer:writedata
 	wire          irq_mapper_receiver0_irq;                                   // jtag_uart:av_irq -> irq_mapper:receiver0_irq
 	wire          irq_mapper_receiver1_irq;                                   // timer:irq -> irq_mapper:receiver1_irq
 	wire          irq_mapper_receiver2_irq;                                   // key:irq -> irq_mapper:receiver2_irq
+	wire          irq_mapper_receiver3_irq;                                   // timsestamp_timer:irq -> irq_mapper:receiver3_irq
 	wire   [31:0] nios2_gen2_0_irq_irq;                                       // irq_mapper:sender_irq -> nios2_gen2_0:irq
-	wire          rst_controller_reset_out_reset;                             // rst_controller:reset_out -> [ELE8307_VGA_0:av_reset, jtag_uart:rst_n, key:reset_n, mm_interconnect_0:ELE8307_VGA_0_av_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_translator:in_reset, sdram:reset_n, sysid_qsys:reset_n, timer:reset_n]
+	wire          rst_controller_reset_out_reset;                             // rst_controller:reset_out -> [ELE8307_VGA_0:av_reset, jtag_uart:rst_n, key:reset_n, mm_interconnect_0:ELE8307_VGA_0_av_reset_reset_bridge_in_reset_reset, onchip_memory2:reset, rst_translator:in_reset, sdram:reset_n, sysid_qsys:reset_n, timer:reset_n, timsestamp_timer:reset_n]
 	wire          rst_controller_reset_out_reset_req;                         // rst_controller:reset_req -> [onchip_memory2:reset_req, rst_translator:reset_req_in]
 	wire          rst_controller_001_reset_out_reset;                         // rst_controller_001:reset_out -> [irq_mapper:reset, mm_interconnect_0:nios2_gen2_0_reset_reset_bridge_in_reset_reset, nios2_gen2_0:reset_n]
 	wire          rst_controller_001_reset_out_reset_req;                     // rst_controller_001:reset_req -> [nios2_gen2_0:reset_req, rst_translator_001:reset_req_in]
@@ -257,6 +263,17 @@ module DE10_Standard_QSYS (
 		.irq        (irq_mapper_receiver1_irq)               //   irq.irq
 	);
 
+	DE10_Standard_QSYS_timsestamp_timer timsestamp_timer (
+		.clk        (pll_outclk0_clk),                                  //   clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),                  // reset.reset_n
+		.address    (mm_interconnect_0_timsestamp_timer_s1_address),    //    s1.address
+		.writedata  (mm_interconnect_0_timsestamp_timer_s1_writedata),  //      .writedata
+		.readdata   (mm_interconnect_0_timsestamp_timer_s1_readdata),   //      .readdata
+		.chipselect (mm_interconnect_0_timsestamp_timer_s1_chipselect), //      .chipselect
+		.write_n    (~mm_interconnect_0_timsestamp_timer_s1_write),     //      .write_n
+		.irq        (irq_mapper_receiver3_irq)                          //   irq.irq
+	);
+
 	DE10_Standard_QSYS_mm_interconnect_0 mm_interconnect_0 (
 		.pll_outclk0_clk                                    (pll_outclk0_clk),                                            //                                  pll_outclk0.clk
 		.ELE8307_VGA_0_av_reset_reset_bridge_in_reset_reset (rst_controller_reset_out_reset),                             // ELE8307_VGA_0_av_reset_reset_bridge_in_reset.reset
@@ -326,7 +343,12 @@ module DE10_Standard_QSYS (
 		.timer_s1_write                                     (mm_interconnect_0_timer_s1_write),                           //                                             .write
 		.timer_s1_readdata                                  (mm_interconnect_0_timer_s1_readdata),                        //                                             .readdata
 		.timer_s1_writedata                                 (mm_interconnect_0_timer_s1_writedata),                       //                                             .writedata
-		.timer_s1_chipselect                                (mm_interconnect_0_timer_s1_chipselect)                       //                                             .chipselect
+		.timer_s1_chipselect                                (mm_interconnect_0_timer_s1_chipselect),                      //                                             .chipselect
+		.timsestamp_timer_s1_address                        (mm_interconnect_0_timsestamp_timer_s1_address),              //                          timsestamp_timer_s1.address
+		.timsestamp_timer_s1_write                          (mm_interconnect_0_timsestamp_timer_s1_write),                //                                             .write
+		.timsestamp_timer_s1_readdata                       (mm_interconnect_0_timsestamp_timer_s1_readdata),             //                                             .readdata
+		.timsestamp_timer_s1_writedata                      (mm_interconnect_0_timsestamp_timer_s1_writedata),            //                                             .writedata
+		.timsestamp_timer_s1_chipselect                     (mm_interconnect_0_timsestamp_timer_s1_chipselect)            //                                             .chipselect
 	);
 
 	DE10_Standard_QSYS_irq_mapper irq_mapper (
@@ -335,6 +357,7 @@ module DE10_Standard_QSYS (
 		.receiver0_irq (irq_mapper_receiver0_irq),           // receiver0.irq
 		.receiver1_irq (irq_mapper_receiver1_irq),           // receiver1.irq
 		.receiver2_irq (irq_mapper_receiver2_irq),           // receiver2.irq
+		.receiver3_irq (irq_mapper_receiver3_irq),           // receiver3.irq
 		.sender_irq    (nios2_gen2_0_irq_irq)                //    sender.irq
 	);
 

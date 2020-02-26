@@ -60,7 +60,7 @@ int Image::Get_Fractal_Level(float newRe, float newIm) {
     }
     return i;
 }
-a
+
 int Image::Get_Fractal_Color(int level) {
     if (level>63) level = 63;
     return ((level<<3) & 0xE0)+level;
@@ -124,7 +124,7 @@ Image * Image::apply_NN(NN * network, int size, int pos) {
 			/* Appliquer le reseau sur un sous-bloc de l'image */
 			for (int j=0; j<size; j++) {
 				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j))/255;
+					source[j*size + i] = (*source_pixel(x+i,y+j));
 				}
 			}
 			network->propagate(source);

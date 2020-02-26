@@ -124,7 +124,7 @@ Image * Image::apply_NN(NN * network, int size, int pos) {
 			/* Appliquer le reseau sur un sous-bloc de l'image */
 			for (int j=0; j<size; j++) {
 				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j))/255.0;
+					source[j*size + i] = (*source_pixel(x+i,y+j))/255;
 				}
 			}
 			network->propagate(source);

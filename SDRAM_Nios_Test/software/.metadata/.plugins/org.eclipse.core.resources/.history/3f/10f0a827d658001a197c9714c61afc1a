@@ -93,7 +93,7 @@ int * NNLayer::propagate(int * source) {
 	int i;
 
 	if (my_debug) for (i=0; i<n_input; i++) {
-		printf("Input %i = %d\r\n", i, source[i]);
+		printf("Input %i = %f\r\n", i, source[i]);
 	}
 
 	int * current_pos = pos_array;
@@ -103,7 +103,7 @@ int * NNLayer::propagate(int * source) {
 			if (source[*(current_pos++)] != 0) LUT_Address += (1 << j);
 		}
 		value[i] = 1 & (LUT_array[LUT_size * i + (LUT_Address >> 3)] >> (LUT_Address & 0x7));
-		if (my_debug) printf("LUT%i[%i] = %d\r\n", i, LUT_Address, value[i]);
+		if (my_debug) printf("LUT%i[%i] = %f\r\n", i, LUT_Address, value[i]);
 	}
 
 	if (my_debug) print();
@@ -128,7 +128,7 @@ void NNLayer::print() {
 			if (j!=0) printf(", %i", *(current_pos++));
 			else printf("%i", *(current_pos++));
 		}
-		printf("}, %d, {",value[i]);
+		printf("}, %f, {",value[i]);
 		for (int j=LUT_size-1; j>=0; j--) {
 			unsigned int hex_value = LUT_array[LUT_size * i + j];
 			if (hex_value<16) printf("0");

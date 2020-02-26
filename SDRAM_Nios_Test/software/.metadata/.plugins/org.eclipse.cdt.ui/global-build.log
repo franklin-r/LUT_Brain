@@ -397,3 +397,64 @@ nios2-elf-objdump --disassemble --syms --all-header --source LUTBrain_NIOS.elf >
 14:30:59 **** Incremental Build of configuration Nios II for project LUTBrain_NIOS_bsp ****
 make all 
 [BSP build complete]
+15:24:05 **** Incremental Build of configuration Nios II for project LUTBrain_NIOS ****
+make all 
+Info: Building ../LUTBrain_NIOS_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../LUTBrain_NIOS_bsp/
+[BSP build complete]
+Info: Compiling Image.cpp to obj/default/Image.o
+nios2-elf-gcc -xc++ -MP -MMD -c -I../LUTBrain_NIOS_bsp//HAL/inc -I../LUTBrain_NIOS_bsp/ -I../LUTBrain_NIOS_bsp//drivers/inc  -pipe -D__hal__ -DALT_PROVIDE_GMON -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED      -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o obj/default/Image.o Image.cpp
+Info: Compiling NN.cpp to obj/default/NN.o
+nios2-elf-gcc -xc++ -MP -MMD -c -I../LUTBrain_NIOS_bsp//HAL/inc -I../LUTBrain_NIOS_bsp/ -I../LUTBrain_NIOS_bsp//drivers/inc  -pipe -D__hal__ -DALT_PROVIDE_GMON -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED      -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o obj/default/NN.o NN.cpp
+NN.cpp: In member function 'void NN::printOutputs()':
+NN.cpp:61:63: warning: format '%f' expects argument of type 'double', but argument 3 has type 'int' [-Wformat=]
+   printf("Neuron[%i]: %2.2f \r\n",i, layer[n_layer-1].value[i]);
+                                                               ^
+NN.cpp:61:63: warning: format '%f' expects argument of type 'double', but argument 3 has type 'int' [-Wformat=]
+Info: Compiling NNLayer.cpp to obj/default/NNLayer.o
+nios2-elf-gcc -xc++ -MP -MMD -c -I../LUTBrain_NIOS_bsp//HAL/inc -I../LUTBrain_NIOS_bsp/ -I../LUTBrain_NIOS_bsp//drivers/inc  -pipe -D__hal__ -DALT_PROVIDE_GMON -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED      -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o obj/default/NNLayer.o NNLayer.cpp
+NNLayer.cpp: In member function 'int* NNLayer::propagate(int*)':
+NNLayer.cpp:96:43: warning: format '%f' expects argument of type 'double', but argument 3 has type 'int' [-Wformat=]
+   printf("Input %i = %f\r\n", i, source[i]);
+                                           ^
+NNLayer.cpp:96:43: warning: format '%f' expects argument of type 'double', but argument 3 has type 'int' [-Wformat=]
+NNLayer.cpp:106:70: warning: format '%f' expects argument of type 'double', but argument 4 has type 'int' [-Wformat=]
+   if (my_debug) printf("LUT%i[%i] = %f\r\n", i, LUT_Address, value[i]);
+                                                                      ^
+NNLayer.cpp:106:70: warning: format '%f' expects argument of type 'double', but argument 4 has type 'int' [-Wformat=]
+NNLayer.cpp: In member function 'void NNLayer::print()':
+NNLayer.cpp:131:29: warning: format '%f' expects argument of type 'double', but argument 2 has type 'int' [-Wformat=]
+   printf("}, %f, {",value[i]);
+                             ^
+NNLayer.cpp:131:29: warning: format '%f' expects argument of type 'double', but argument 2 has type 'int' [-Wformat=]
+Info: Compiling main.cpp to obj/default/main.o
+nios2-elf-gcc -xc++ -MP -MMD -c -I../LUTBrain_NIOS_bsp//HAL/inc -I../LUTBrain_NIOS_bsp/ -I../LUTBrain_NIOS_bsp//drivers/inc  -pipe -D__hal__ -DALT_PROVIDE_GMON -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED      -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o obj/default/main.o main.cpp
+Info: Linking LUTBrain_NIOS.elf
+nios2-elf-g++  -T'../LUTBrain_NIOS_bsp//linker.x' -msys-crt0='../LUTBrain_NIOS_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../LUTBrain_NIOS_bsp/   -Wl,-Map=LUTBrain_NIOS.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o LUTBrain_NIOS.elf obj/default/Image.o obj/default/NN.o obj/default/NNLayer.o obj/default/VGA.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert LUTBrain_NIOS.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041090 --timestamp 1582651264 --profiling_enabled true --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_Standard_QSYS --quartus_project_dir "C:/Users/alexi/Documents/ELE8307/LUT_Brain/SDRAM_Nios_Test" --jdi ../..//output_files/SDRAM_Nios_Test.jdi --sopcinfo C:/Users/alexi/Documents/ELE8307/LUT_Brain/SDRAM_Nios_Test/software/LUTBrain_NIOS_bsp/../../DE10_Standard_QSYS.sopcinfo
+Info: (LUTBrain_NIOS.elf) 395 KBytes program size (code + initialized data).
+Info:                     65226 KBytes free for stack + heap.
+Info: Creating LUTBrain_NIOS.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source LUTBrain_NIOS.elf >LUTBrain_NIOS.objdump
+[LUTBrain_NIOS build complete]
+15:24:17 **** Incremental Build of configuration Nios II for project LUTBrain_NIOS_bsp ****
+make all 
+[BSP build complete]
+15:25:41 **** Incremental Build of configuration Nios II for project LUTBrain_NIOS ****
+make all 
+Info: Building ../LUTBrain_NIOS_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../LUTBrain_NIOS_bsp/
+[BSP build complete]
+Info: Compiling NNLayer.cpp to obj/default/NNLayer.o
+nios2-elf-gcc -xc++ -MP -MMD -c -I../LUTBrain_NIOS_bsp//HAL/inc -I../LUTBrain_NIOS_bsp/ -I../LUTBrain_NIOS_bsp//drivers/inc  -pipe -D__hal__ -DALT_PROVIDE_GMON -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED      -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o obj/default/NNLayer.o NNLayer.cpp
+Info: Linking LUTBrain_NIOS.elf
+nios2-elf-g++  -T'../LUTBrain_NIOS_bsp//linker.x' -msys-crt0='../LUTBrain_NIOS_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../LUTBrain_NIOS_bsp/   -Wl,-Map=LUTBrain_NIOS.map   -O0 -g -Wall   -mno-hw-div -mhw-mul -mno-hw-mulx -pg -mgpopt=global  -o LUTBrain_NIOS.elf obj/default/Image.o obj/default/NN.o obj/default/NNLayer.o obj/default/VGA.o obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert LUTBrain_NIOS.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041090 --timestamp 1582651264 --profiling_enabled true --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_Standard_QSYS --quartus_project_dir "C:/Users/alexi/Documents/ELE8307/LUT_Brain/SDRAM_Nios_Test" --jdi ../..//output_files/SDRAM_Nios_Test.jdi --sopcinfo C:/Users/alexi/Documents/ELE8307/LUT_Brain/SDRAM_Nios_Test/software/LUTBrain_NIOS_bsp/../../DE10_Standard_QSYS.sopcinfo
+Info: (LUTBrain_NIOS.elf) 395 KBytes program size (code + initialized data).
+Info:                     65226 KBytes free for stack + heap.
+Info: Creating LUTBrain_NIOS.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source LUTBrain_NIOS.elf >LUTBrain_NIOS.objdump
+[LUTBrain_NIOS build complete]
+15:25:50 **** Incremental Build of configuration Nios II for project LUTBrain_NIOS_bsp ****
+make all 
+[BSP build complete]

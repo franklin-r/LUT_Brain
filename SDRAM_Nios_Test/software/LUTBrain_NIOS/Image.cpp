@@ -113,31 +113,41 @@ void Image::make_bw() {
  * image a l'entree de ce reseau de neuronnes.
  *
  *******************************************************/
-Image * Image::apply_NN(NN * network, int size, int pos) {
+Image **Image::apply_NN(NN * network, int size) {
 	int source[size*size];
-	Image * result = new Image(length-size+1,height-size+1);
+	//Image * result = new Image(length-size+1,height-size+1);
+	//Image *tab_result[network->layer[network->n_layer-1].n_neuron];		// Image array. Contains the output for each output neuron
+	Image **tab_result = (Image**)malloc(network->layer[network->n_layer-1].n_neuron * sizeof(Image*));
+
+	for(int i = 0; i < network->layer[network->n_layer-1].n_neuron; i++) {
+		tab_result[i] = new Image(length-size+1,height-size+1);
+	}
 
 	printf("Processing line ");
 	for (int y=0; y<=height-size; y++) {
 		printf("%i,",y);
 		for (int x=0; x<=length-size; x++) {
-			/* Appliquer le reseau sur un sous-bloc de l'image */
+			// Appliquer le reseau sur un sous-bloc de l'image
 			for (int j=0; j<size; j++) {
 				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j));
+					source[j*size + i] = (*source_pixel(x+i,y+j));		// size*size sub-image
 				}
 			}
 			network->propagate(source);
 
-			/* Stocker les bons/meilleurs matchs */
+			// Stocker les bons/meilleurs matchs
 			unsigned char pixel;
-			pixel = 255*(network->layer[network->n_layer-1].value[pos]);
-			*(result->source_pixel(x,y)) = pixel;
+			for(int k = 0; k < network->layer[network->n_layer-1].n_neuron; k++) {
+				pixel = 255*(network->layer[network->n_layer-1].value[k]);
+				//*(result->source_pixel(x,y)) = pixel;
+				*(tab_result[k]->source_pixel(x,y)) = pixel;
+			}
 		}
 	}
 	printf("\r\n");
-	return result;
+	return tab_result;
 }
+
 
 /**********************************************************
  * Affiche l'image a l'ecran a la position x,y.

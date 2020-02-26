@@ -27,7 +27,8 @@ public:
 
 	unsigned char * source_pixel(int x, int y);
 	void make_bw();
-	Image * apply_NN(NN * network, int size, int pos);
+	//Image * apply_NN(NN * network, int size, int pos);
+	Image ** apply_NN(NN * network, int size);
 	void printToScreen(int x, int y, VGA *pVGA);
 	void print();
 	~Image();

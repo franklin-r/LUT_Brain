@@ -77,9 +77,13 @@ int main(int argc, char **argv)
 
 	for (int i=0;i<10;i++) {
 		result_images[i]->printToScreen(60*i,240,pVGA);
+		//delete result_images[i];
+	}
+
+	for (int i=0;i<10;i++) {
 		delete result_images[i];
 	}
-	delete result_images;
+	//delete result_images;
 
 
 	return 0;

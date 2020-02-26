@@ -113,43 +113,8 @@ void Image::make_bw() {
  * image a l'entree de ce reseau de neuronnes.
  *
  *******************************************************/
- /*
-Image * Image::apply_NN(NN * network, int size, int pos) {
-	float source[size*size];
-	Image * result = new Image(length-size+1,height-size+1);
-
-	printf("Processing line ");
-	for (int y=0; y<=height-size; y++) {
-		printf("%i,",y);
-		for (int x=0; x<=length-size; x++) {
-			// Appliquer le reseau sur un sous-bloc de l'image
-			for (int j=0; j<size; j++) {
-				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j))/255.0;		// size*size sub-image
-				}
-			}
-			network->propagate(source);
-
-			// Stocker les bons/meilleurs matchs
-			unsigned char pixel;
-			pixel = 255*(network->layer[network->n_layer-1].value[pos]);
-			*(result->source_pixel(x,y)) = pixel;
-		}
-	}
-	printf("\r\n");
-	return result;
-}
-*/
-
-/*******************************************************
- * Application d'un reseau de neuronnes a cette image.
- *
- * Applique toutes les sous-images size x size de cette
- * image a l'entree de ce reseau de neuronnes.
- *
- *******************************************************/
 Image **Image::apply_NN(NN * network, int size) {
-	float source[size*size];
+	int source[size*size];
 	//Image * result = new Image(length-size+1,height-size+1);
 	//Image *tab_result[network->layer[network->n_layer-1].n_neuron];		// Image array. Contains the output for each output neuron
 	Image **tab_result = (Image**)malloc(network->layer[network->n_layer-1].n_neuron * sizeof(Image*));
@@ -165,7 +130,7 @@ Image **Image::apply_NN(NN * network, int size) {
 			// Appliquer le reseau sur un sous-bloc de l'image
 			for (int j=0; j<size; j++) {
 				for (int i=0; i<size; i++) {
-					source[j*size + i] = (*source_pixel(x+i,y+j))/255.0;		// size*size sub-image
+					source[j*size + i] = (*source_pixel(x+i,y+j));		// size*size sub-image
 				}
 			}
 			network->propagate(source);

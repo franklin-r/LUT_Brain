@@ -60,7 +60,7 @@ int Image::Get_Fractal_Level(float newRe, float newIm) {
     }
     return i;
 }
-
+a
 int Image::Get_Fractal_Color(int level) {
     if (level>63) level = 63;
     return ((level<<3) & 0xE0)+level;
@@ -114,7 +114,7 @@ void Image::make_bw() {
  *
  *******************************************************/
 Image * Image::apply_NN(NN * network, int size, int pos) {
-	float source[size*size];
+	int source[size*size];
 	Image * result = new Image(length-size+1,height-size+1);
 
 	printf("Processing line ");

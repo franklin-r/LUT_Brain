@@ -18,7 +18,7 @@ NN::~NN() {
 	// TODO Auto-generated destructor stub
 }
 
-float * NN::propagate(float * source) {
+int * NN::propagate(int * source) {
 	for (int i=0; i<n_layer; i++) {
 		source = layer[i].propagate(source);
 	}
@@ -26,7 +26,7 @@ float * NN::propagate(float * source) {
 }
 
 int NN::getMaxOutputIndex() {
-	float maxval = layer[n_layer-1].value[0];
+	int maxval = layer[n_layer-1].value[0];
 	int maxindex = 0;
 	for(int i=1; i<layer[n_layer-1].n_neuron; i++) {
 		if( layer[n_layer-1].value[i] > maxval) {
@@ -38,7 +38,7 @@ int NN::getMaxOutputIndex() {
 }
 
 int NN::getMaxOutputValue() {
-	float maxval = layer[n_layer-1].value[0];
+	int maxval = layer[n_layer-1].value[0];
 	for(int i=1; i<layer[n_layer-1].n_neuron; i++) {
 		if( layer[n_layer-1].value[i] > maxval) {
 			maxval = layer[n_layer-1].value[i];

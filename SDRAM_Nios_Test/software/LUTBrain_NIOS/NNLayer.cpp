@@ -40,7 +40,7 @@ void NNLayer::init(int new_n_input, int new_n_neuron, int nipn) {
 	LUT_size = ((1<<n_input_per_neuron) + 7)/8;
 	LUT_array = new unsigned char[n_neuron*LUT_size];
 	pos_array = new int[n_neuron*n_input_per_neuron];
-	value = new float[n_neuron];
+	value = new int[n_neuron];
 }
 
 unsigned int simpleRand() {
@@ -88,7 +88,7 @@ NNLayer::~NNLayer() {
 	// TODO Auto-generated destructor stub
 }
 
-float * NNLayer::propagate(float * source) {
+int * NNLayer::propagate(int * source) {
 	// TODO Auto-generated constructor stub
 	int i;
 

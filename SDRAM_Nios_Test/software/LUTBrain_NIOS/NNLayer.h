@@ -27,9 +27,9 @@ public:
 
 	unsigned char *LUT_array;
 	int *pos_array;
-	float *value;
+	int *value;
 
-	float * propagate(float * source);
+	int * propagate(int * source);
 
 	void print_activation();
 	void print();

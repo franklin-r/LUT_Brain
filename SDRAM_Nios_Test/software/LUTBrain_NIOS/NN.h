@@ -17,7 +17,7 @@ public:
 
 	int n_layer;
 	NNLayer * layer;
-	float * propagate(float * source);
+	int * propagate(int * source);
 	int  getMaxOutputIndex();
 	int getMaxOutputValue();
 	void print();
